@@ -3,8 +3,8 @@ package com.springboot.transaction.services.utils;
 import com.springboot.tm.spec.dto.FreezeStatus;
 import com.springboot.tm.spec.dto.TransactionResponseDTO;
 import com.springboot.tm.spec.dto.TransferRequestDTO;
-import com.springboot.transaction.domain.TransactionStatus;
-import com.springboot.transaction.domain.TransactionType;
+import com.springboot.tm.spec.dto.TransactionStatus;
+import com.springboot.tm.spec.dto.TranType;
 import com.springboot.transaction.entities.Account;
 import com.springboot.transaction.entities.TransactionRecord;
 import org.springframework.stereotype.Component;
@@ -92,7 +92,7 @@ public class TransferServiceUtil {
     ) {
         TransactionRecord record = new TransactionRecord();
         record.setTransactionId(UUID.randomUUID().toString());
-        record.setTransactionType(TransactionType.TRANSFER.name());
+        record.setTransactionType(TranType.FUND_TRANSFER.name());
         record.setTransactionStatus(status.name());
         record.setAmount(amount);
         record.setFromAccountNumber(source.getAccountNumber());

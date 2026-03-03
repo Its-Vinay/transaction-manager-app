@@ -5,16 +5,13 @@ import com.springboot.tm.spec.dto.AccountResponseDTO;
 import com.springboot.tm.spec.dto.FreezeStatus;
 import com.springboot.tm.spec.dto.Status;
 import com.springboot.tm.spec.dto.TransactionInquiryDTO;
-import com.springboot.transaction.domain.BankCode;
+import com.springboot.tm.spec.dto.BankCode;
 import com.springboot.transaction.entities.Account;
 import com.springboot.transaction.entities.TransactionRecord;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,17 +47,22 @@ public class AccountServiceUtil {
         return accountResponseDTO;
     }
 
-    public TransactionInquiryDTO populateTransactionInquiryDto(TransactionRecord transactionRecord) {
-        TransactionInquiryDTO inquiryDTO = new TransactionInquiryDTO();
-        inquiryDTO.setTransactionType(transactionRecord.getTransactionType());
-        inquiryDTO.setTransactionStatus(transactionRecord.getTransactionStatus());
-        inquiryDTO.setAmount(transactionRecord.getAmount());
-        inquiryDTO.setFromAccountNumber(transactionRecord.getFromAccountNumber());
-        inquiryDTO.setToAccountNumber(transactionRecord.getToAccountNumber());
-        inquiryDTO.setBankId(transactionRecord.getBankId());
-        inquiryDTO.setFailureReason(transactionRecord.getFailureReason());
-        inquiryDTO.setCreatedAt(transactionRecord.getCreatedAt());
-        return inquiryDTO;
+    public List<TransactionInquiryDTO> populateTransactionInquiryDto(List<TransactionRecord> transactionRecords) {
+        List<TransactionInquiryDTO> transactionInquiryDTOS = new ArrayList<>();
+        for(TransactionRecord transactionRecord: transactionRecords){
+            TransactionInquiryDTO inquiryDTO = new TransactionInquiryDTO();
+            inquiryDTO.setTransactionType(transactionRecord.getTransactionType());
+            inquiryDTO.setTransactionStatus(transactionRecord.getTransactionStatus());
+            inquiryDTO.setAmount(transactionRecord.getAmount());
+            inquiryDTO.setFromAccountNumber(transactionRecord.getFromAccountNumber());
+            inquiryDTO.setToAccountNumber(transactionRecord.getToAccountNumber());
+            inquiryDTO.setBankId(transactionRecord.getBankId());
+            inquiryDTO.setFailureReason(transactionRecord.getFailureReason());
+            inquiryDTO.setCreatedAt(transactionRecord.getCreatedAt());
+            transactionInquiryDTOS.add(inquiryDTO);
+        }
+
+        return transactionInquiryDTOS;
     }
 
     public String parseStatus(String status) {

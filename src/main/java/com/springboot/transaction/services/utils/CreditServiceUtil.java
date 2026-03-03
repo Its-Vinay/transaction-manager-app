@@ -4,12 +4,11 @@ import com.springboot.tm.spec.dto.CrDrIndicator;
 import com.springboot.tm.spec.dto.FreezeStatus;
 import com.springboot.tm.spec.dto.TransactionRequestDTO;
 import com.springboot.tm.spec.dto.TransactionResponseDTO;
-import com.springboot.transaction.domain.TransactionStatus;
-import com.springboot.transaction.domain.TransactionType;
+import com.springboot.tm.spec.dto.TransactionStatus;
+import com.springboot.tm.spec.dto.TranType;
 import com.springboot.transaction.entities.Account;
 import com.springboot.transaction.entities.TransactionRecord;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -51,7 +50,7 @@ public class CreditServiceUtil {
     public TransactionRecord createCreditTransactionRecord(Account account, BigDecimal amount) {
         TransactionRecord record = new TransactionRecord();
         record.setTransactionId(UUID.randomUUID().toString());
-        record.setTransactionType(TransactionType.DEPOSIT.name());
+        record.setTransactionType(TranType.CREDIT.name());
         record.setTransactionStatus(TransactionStatus.SUCCESS.name());
         record.setAmount(amount);
         record.setFromAccountNumber(account.getAccountNumber());

@@ -24,7 +24,7 @@ public class TranInquiryServiceImpl implements TranInquiryService {
     private AccountServiceUtil accountServiceUtil;
 
     @Override
-    public TransactionInquiryDTO retrieveTran(String accountNumber) {
+    public List<TransactionInquiryDTO> retrieveTran(String accountNumber) {
         accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found: " + accountNumber));
 
@@ -35,6 +35,6 @@ public class TranInquiryServiceImpl implements TranInquiryService {
             throw new IllegalArgumentException("No transactions found for account: " + accountNumber);
         }
 
-        return accountServiceUtil.populateTransactionInquiryDto(records.get(0));
+        return accountServiceUtil.populateTransactionInquiryDto(records);
     }
 }
