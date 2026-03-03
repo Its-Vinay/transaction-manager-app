@@ -28,6 +28,7 @@ public class AccountServiceUtil {
         }
 
         Account account = new Account();
+        account.setAccountId(newId(null));
         account.setAccountNumber(requireText(accountRequestDTO.getAccountNumber(), "accountNumber"));
         account.setAccountName(requireText(accountRequestDTO.getAccountName(), "accountName"));
         account.setStatus(parseStatus(accountRequestDTO.getStatus()));

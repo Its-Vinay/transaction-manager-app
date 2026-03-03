@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 public class Account {
 
     @Id
-    @GeneratedValue
     private String accountId;
 
     @Column(nullable = false, unique = true)
