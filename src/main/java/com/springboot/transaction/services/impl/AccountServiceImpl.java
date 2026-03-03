@@ -6,11 +6,13 @@ import com.springboot.tm.spec.services.AccountService;
 import com.springboot.transaction.entities.Account;
 import com.springboot.transaction.repositories.AccountRepository;
 import com.springboot.transaction.services.utils.AccountServiceUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
@@ -22,19 +24,23 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDTO) {
+        log.debug("Creating account with request : {}", accountRequestDTO);
         Account account = accountServiceUtil.createAccountFromDto(accountRequestDTO);
         if (accountRepository.existsByAccountNumber(account.getAccountNumber())) {
+            log.error("Account already exists");
             throw new IllegalArgumentException("Account already exists: " + account.getAccountNumber());
         }
-
         accountRepository.save(account);
         return accountServiceUtil.populateAccountResponseDto(account);
     }
 
     @Override
     public AccountResponseDTO inquireAccount(String accountNumber) {
+        log.debug("inquire account with account number : {}", accountNumber);
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found: " + accountNumber));
-        return accountServiceUtil.populateAccountResponseDto(account);
+        AccountResponseDTO accountResponseDTO =  accountServiceUtil.populateAccountResponseDto(account);
+        log.debug("Account inquiry response for accountNumber {} is  : {}", accountNumber, accountResponseDTO);
+        return accountResponseDTO;
     }
 }

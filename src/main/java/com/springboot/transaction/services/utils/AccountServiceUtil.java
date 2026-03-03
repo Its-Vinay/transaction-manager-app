@@ -44,6 +44,7 @@ public class AccountServiceUtil {
         accountResponseDTO.setAccountName(account.getAccountName());
         accountResponseDTO.setStatus(account.getStatus());
         accountResponseDTO.setFreezeStatus(account.getFreezeStatus());
+        accountResponseDTO.setBalance(account.getBalance()==null?BigDecimal.ZERO:account.getBalance());
         return accountResponseDTO;
     }
 
